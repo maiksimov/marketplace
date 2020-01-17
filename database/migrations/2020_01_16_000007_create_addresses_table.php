@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Entities\Address;
+use App\Entities\Country;
 
 class CreateAddressesTable extends Migration
 {
@@ -22,6 +23,10 @@ class CreateAddressesTable extends Migration
             $table->string('phone')->nullable(false);
             $table->unsignedBigInteger('country_id')->nullable(false);
             $table->timestamps();
+
+            $table->foreign('country_id')
+                ->references('id')->on((new Country())->getTable())
+                ->onDelete('cascade');
         });
     }
 
