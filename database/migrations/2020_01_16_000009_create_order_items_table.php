@@ -3,9 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\OrderItem;
-use App\Order;
-use App\Product;
+use App\Entities\OrderItem;
+use App\Entities\Order;
+use App\Entities\Product;
 
 class CreateOrderItemsTable extends Migration
 {

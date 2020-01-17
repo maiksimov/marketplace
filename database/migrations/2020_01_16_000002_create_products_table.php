@@ -3,8 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Category;
-use App\Product;
+use App\Entities\Category;
+use App\Entities\Product;
 
 class CreateProductsTable extends Migration
 {
