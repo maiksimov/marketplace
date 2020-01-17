@@ -19,7 +19,7 @@ class CreateOrderItemsTable extends Migration
         Schema::create((new OrderItem())->getTable(), function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('order_id')->nullable(false);
-            $table->unsignedBigInteger('product_id')->nullable(false);
+            $table->unsignedBigInteger('product_id')->nullable();
             $table->unsignedDecimal('price', 12, 2)->nullable(false);
             $table->unsignedSmallInteger('quantity')->nullable(false);
             $table->timestamps();

@@ -22,6 +22,7 @@ class CreateCreditCardsTable extends Migration
             $table->unsignedSmallInteger('expiration_year')->nullable(false);
             $table->string('first_name')->nullable(false);
             $table->string('last_name')->nullable(false);
+            $table->unsignedBigInteger('customer_id')->nullable(false);
             $table->timestamps();
             $table->foreign('customer_id')
                 ->references('id')->on((new Customer())->getTable())

@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->decimal('price')->nullable(false)->default(0.0);
             $table->unsignedInteger('in_stock')->nullable(false)->default(0);
-            $table->bigIncrements('category_id')->nullable(false);
+            $table->unsignedBigInteger('category_id')->nullable(false);
             $table->timestamps();
 
             $table->foreign('category_id')
@@ -37,6 +37,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists((new Product())->getTable());
     }
 }
