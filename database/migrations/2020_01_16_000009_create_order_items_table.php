@@ -3,6 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\OrderItem;
+use App\Order;
+use App\Product;
 
 class CreateOrderItemsTable extends Migration
 {
@@ -13,9 +16,21 @@ class CreateOrderItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create((new OrderItem())->getTable(), function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('order_id')->nullable(false);
+            $table->unsignedBigInteger('product_id')->nullable(false);
+            $table->unsignedDecimal('price', 12, 2)->nullable(false);
+            $table->unsignedSmallInteger('quantity')->nullable(false);
             $table->timestamps();
+
+            $table->foreign('order_id')
+                ->references('id')->on((new Order())->getTable())
+                ->onDelete('cascade');
+
+            $table->foreign('product_id')
+                ->references('id')->on((new Product())->getTable())
+                ->onDelete('SET NULL');
         });
     }
 
@@ -26,6 +41,6 @@ class CreateOrderItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists((new OrderItem())->getTable());
     }
 }

@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Order;
+use App\Factories\StateFactory;
 
 class CreateOrdersTable extends Migration
 {
@@ -13,8 +15,11 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create((new Order())->getTable(), function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedDecimal('total_price', 12, 2)->nullable(false)->default(0.0);
+            $table->timestamp('completed');
+            $table->unsignedSmallInteger('state')->nullable(false)->default((new StateFactory())->defaultState());
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists((new Order())->getTable());
     }
 }
