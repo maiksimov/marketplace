@@ -16,3 +16,18 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::group(['namespace' => '\App\Http\Controllers\Api'], function() {
+    Route::get('/categories', 'CategoryController@index');
+    Route::post('/categories', 'CategoryController@store');
+    Route::patch('/categories/{categoryId}', 'CategoryController@update');
+    Route::delete('/categories/{categoryId}', 'CategoryController@destroy');
+    Route::get('/categories/{categoryId}', 'CategoryController@show');
+
+    Route::get('/products', 'ProductController@index');
+//    Route::post('/categories', 'CategoryController@store');
+//    Route::patch('/categories/{categoryId}', 'CategoryController@update');
+//    Route::delete('/categories/{categoryId}', 'CategoryController@destroy');
+//    Route::get('/categories/{categoryId}', 'CategoryController@show');
+});

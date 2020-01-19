@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Entities\Customer;
 
-class CustomerSeeder extends Seeder
+class CustomerrSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +11,6 @@ class CustomerSeeder extends Seeder
      */
     public function run()
     {
-        factory(Customer::class, 1000)->create();
+        //
     }
 }

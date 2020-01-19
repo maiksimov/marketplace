@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title')->nullable(false);
             $table->text('description');
-            $table->decimal('price')->nullable(false)->default(0.0);
+            $table->unsignedDecimal('price', 12, 2)->nullable(false)->default(0.0);
             $table->unsignedInteger('in_stock')->nullable(false)->default(0);
             $table->unsignedBigInteger('category_id')->nullable(false);
             $table->timestamps();
