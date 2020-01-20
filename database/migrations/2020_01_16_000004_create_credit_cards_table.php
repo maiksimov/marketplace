@@ -19,7 +19,7 @@ class CreateCreditCardsTable extends Migration
             $table->unsignedInteger('number')->nullable(false);
             $table->unsignedSmallInteger('cvv')->nullable(false);
             $table->unsignedTinyInteger('expiration_month')->nullable(false);
-            $table->unsignedSmallInteger('expiration_year')->nullable(false);
+            $table->year('expiration_year')->nullable(false);
             $table->string('first_name')->nullable(false);
             $table->string('last_name')->nullable(false);
             $table->unsignedBigInteger('customer_id')->nullable(false);
