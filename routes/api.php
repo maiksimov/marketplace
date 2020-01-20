@@ -26,8 +26,8 @@ Route::group(['namespace' => '\App\Http\Controllers\Api'], function() {
     Route::get('/categories/{categoryId}', 'CategoryController@show');
 
     Route::get('/products', 'ProductController@index');
-//    Route::post('/categories', 'CategoryController@store');
-//    Route::patch('/categories/{categoryId}', 'CategoryController@update');
-//    Route::delete('/categories/{categoryId}', 'CategoryController@destroy');
-//    Route::get('/categories/{categoryId}', 'CategoryController@show');
+    Route::post('/products', 'ProductController@store');
+    Route::patch('/products/{productId}', 'ProductController@update');
+    Route::delete('/products/{productId}', 'ProductController@destroy');
+    Route::get('/products/{productId}', 'ProductController@show');
 });

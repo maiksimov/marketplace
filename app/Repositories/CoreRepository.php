@@ -17,4 +17,30 @@ abstract class CoreRepository
     {
         return clone $this->model;
     }
+
+    public function findById(int $modelId)
+    {
+        return $this->init()->findOrFail($modelId);
+    }
+
+    public function deleteById(int $modelId)
+    {
+        $model = $this->findById($modelId);
+        return $model->delete();
+    }
+
+    public function create($data)
+    {
+        $newModel = app($this->getModelClass());
+        $newModel->fill($data);
+        $newModel->save();
+        return $newModel;
+    }
+
+    public function updateById(int $modelId, $data)
+    {
+        $model = $this->findById($modelId);
+        $model->update($data);
+        return $model;
+    }
 }

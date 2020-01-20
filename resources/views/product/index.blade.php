@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Categories</title>
+        <title>Products</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -80,12 +80,8 @@
             @endif
 
             <div class="content">
-                @foreach($categories as $category)
-                    <h4>{{ $category->title }} ({{ $category->products->count() }})</h4>
-                    {{--@foreach($category->products as $product)--}}
-                        {{--<p>{{ $product->title }}</p>--}}
-                    {{--@endforeach--}}
-                    <hr>
+                @foreach($products as $product)
+                    <p>{{ $product->title }}</p>
                 @endforeach
             </div>
         </div>

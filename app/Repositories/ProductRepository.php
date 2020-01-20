@@ -13,33 +13,11 @@ class ProductRepository extends CoreRepository
 
     public function all()
     {
-        return $this->init()->all();
+        return $this->init()->with('category')->get();
     }
 
-    public function findById(int $categoryId)
+    public function searchByPrice($price)
     {
-        return $this->init()->findOrFail($categoryId);
-    }
-
-    public function create($data)
-    {
-        $newCategory = app($this->getModelClass());
-        $newCategory->title = $data->title;
-        $newCategory->save();
-        return $newCategory;
-    }
-
-    public function updateById(int $categoryId, $data)
-    {
-        $category = $this->findById($categoryId);
-        $category->title = $data->title;
-        $category->save();
-        return $category;
-    }
-
-    public function deleteById(int $categoryId)
-    {
-        $category = $this->findById($categoryId);
-        return $category->delete();
+        return $this->init()->with('category')->where('price', '<=', $price )->get();
     }
 }

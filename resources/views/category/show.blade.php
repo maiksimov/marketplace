@@ -80,13 +80,12 @@
             @endif
 
             <div class="content">
-                @foreach($categories as $category)
-                    <h4>{{ $category->title }} ({{ $category->products->count() }})</h4>
-                    {{--@foreach($category->products as $product)--}}
-                        {{--<p>{{ $product->title }}</p>--}}
-                    {{--@endforeach--}}
-                    <hr>
+                <h1>{{ $category->title }}</h1>
+                <hr>
+                @foreach($category->products as $product)
+                    <p>{{ $product->title }}</p>
                 @endforeach
+                <hr>
             </div>
         </div>
     </body>

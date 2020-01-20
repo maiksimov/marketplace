@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Entities\Category;
 
-class CategoryRequest extends AbstractSiteRequest
+class UpdateProductRequest extends AbstractSiteRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,11 @@ class CategoryRequest extends AbstractSiteRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|unique:' .  (new Category())->getTable(),
+            'title' => 'sometimes|string',
+            'description' => 'sometimes|string',
+            'price' => 'sometimes|numeric',
+            'in_stock' => 'sometimes|integer',
+            'category_id' => 'sometimes|integer|exists:' . (new Category())->getTable() . ',id'
         ];
     }
 }

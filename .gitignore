@@ -12,6 +12,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /docker
+/build
 /storage/docker
 docker-compose.yml
 laravel-echo-server.json

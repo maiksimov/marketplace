@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($request->wantsJson()) {
+//        if($request->wantsJson()) {
             switch (get_class($exception))
             {
                 case AuthenticationException::class:
@@ -69,7 +69,7 @@ class Handler extends ExceptionHandler
                     return $this->error($exception->getMessage(), $exception->getCode() > 0 ? $exception->getCode() : Response::HTTP_BAD_REQUEST);
                     break;
             }
-        }
+//        }
         return parent::render($request, $exception);
     }
 

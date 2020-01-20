@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 Route::get('/categories', 'CategoryController@index');
+Route::get('/categories/{categoryId}', 'CategoryController@show');
+Route::get('/products/search-by-price', 'ProductController@searchByPrice');
+Route::get('/products', 'ProductController@index');

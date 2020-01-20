@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\SearchProductByPriceRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Response;
 
@@ -22,27 +24,33 @@ class ProductController extends Controller
         return response()->json(['products' => $products], Response::HTTP_OK);
     }
 
-    public function store(CategoryRequest $request)
+    public function store(CreateProductRequest $request)
     {
-        $category = $this->categoryRepository->create($request);
-        return response()->json(['category' => $category], Response::HTTP_CREATED);
+        $product = $this->productRepository->create($request->all());
+        return response()->json([ 'product' => $product ], Response::HTTP_CREATED);
     }
 
-    public function show(int $categoryId)
+    public function show(int $productId)
     {
-        $category = $this->categoryRepository->findById($categoryId);
-        return response()->json(['category' => $category], Response::HTTP_OK);
+        $product = $this->productRepository->findById($productId);
+        return response()->json(['products' => $product], Response::HTTP_OK);
     }
 
-    public function update(int $categoryId, CategoryRequest $request)
+    public function update(int $productId, UpdateProductRequest $request)
     {
-        $category = $this->categoryRepository->updateById($categoryId, $request);
-        return response()->json(['category' => $category], Response::HTTP_OK);
+        $product = $this->productRepository->updateById($productId, $request->all());
+        return response()->json(['category' => $product], Response::HTTP_OK);
     }
 
-    public function destroy(int $categoryId)
+    public function destroy(int $productId)
     {
-        $response = $this->categoryRepository->deleteById($categoryId);
+        $response = $this->productRepository->deleteById($productId);
         return response()->json(['deleted' => $response], Response::HTTP_OK);
+    }
+
+    public function searchByPrice(SearchProductByPriceRequest $request)
+    {
+        $products = $this->productRepository->searchByPrice($request->get('price'));
+        return response()->json(['products' => $products], Response::HTTP_OK);
     }
 }
