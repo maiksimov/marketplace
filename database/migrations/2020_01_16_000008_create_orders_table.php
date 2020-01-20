@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Entities\Order;
 use App\Entities\Customer;
 use App\Entities\CreditCard;
+use App\Entities\Address;
 use App\Factories\StateFactory;
 
 class CreateOrdersTable extends Migration
