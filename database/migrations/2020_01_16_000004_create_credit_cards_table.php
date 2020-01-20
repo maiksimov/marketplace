@@ -16,7 +16,7 @@ class CreateCreditCardsTable extends Migration
     {
         Schema::create('credit_cards', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('number')->nullable(false);
+            $table->unsignedBigInteger('number')->nullable(false);
             $table->unsignedSmallInteger('cvv')->nullable(false);
             $table->unsignedTinyInteger('expiration_month')->nullable(false);
             $table->year('expiration_year')->nullable(false);
