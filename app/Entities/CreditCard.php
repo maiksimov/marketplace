@@ -16,4 +16,14 @@ class CreditCard extends Model
         'last_name',
         'customer_id'
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
