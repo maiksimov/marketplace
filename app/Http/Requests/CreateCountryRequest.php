@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Entities\Country;
 
-class CreateAddressRequest extends AbstractSiteRequest
+class CreateCountryRequest extends AbstractSiteRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class CreateAddressRequest extends AbstractSiteRequest
     public function rules()
     {
         return [
-            'address' => 'required|string',
-            'zip_code' => 'required|integer|size:5',
-            'city' => 'required|string',
-            'phone' => 'required|string',
-            'country_id' => 'required|integer|exists:' . (new Country())->getTable() . ',id'
+            'name' => 'required|string|unique:' .  (new Country())->getTable(),
         ];
     }
 }
