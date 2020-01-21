@@ -10,6 +10,10 @@ use Tests\TestCase;
 class CategoryTest extends TestCase
 {
     use RefreshDatabase;
+    const NEW_TITLE = 'New Category Title';
+    const NOT_UNIQUE_TITLE = 'Not Unique Category Title';
+    const EMPTY_TITLE = '';
+    const NOT_EXISTED_ID = 1;
 
     protected function setUp(): void
     {
@@ -38,11 +42,10 @@ class CategoryTest extends TestCase
     /** @test */
     public function a_category_can_be_added()
     {
-        $title = 'New Category Title';
         $response = $this->post('/api/categories', [
-            'title' => $title
+            'title' => self::NEW_TITLE
         ]);
-        $response->assertJsonFragment(['title' => $title]);
+        $response->assertJsonFragment(['title' => self::NEW_TITLE]);
         $response->assertStatus(Response::HTTP_CREATED);
         $this->assertCount(1, Category::all());
     }
@@ -51,12 +54,11 @@ class CategoryTest extends TestCase
     public function a_category_can_be_updated()
     {
         $category = factory(Category::class)->create();
-        $newTitle = 'New Category Title';
         $response = $this->patch("/api/categories/{$category->id}", [
-            'title' => $newTitle
+            'title' => self::NEW_TITLE
         ]);
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonFragment(['title' => $newTitle]);
+        $response->assertJsonFragment(['title' => self::NEW_TITLE]);
     }
 
     /** @test */
@@ -71,9 +73,8 @@ class CategoryTest extends TestCase
     /** @test */
     public function a_category_cannot_be_added_with_empty_title()
     {
-        $title = '';
         $response = $this->post('/api/categories', [
-            'title' => $title
+            'title' => self::EMPTY_TITLE
         ]);
         $response->assertJsonCount(1, 'errors');
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -82,10 +83,9 @@ class CategoryTest extends TestCase
     /** @test */
     public function a_category_cannot_be_added_with_not_unique_title()
     {
-        $title = 'Not Unique Category Title';
-        factory(Category::class)->create(['title' => $title]);
+        factory(Category::class)->create(['title' => self::NOT_UNIQUE_TITLE]);
         $response = $this->post('/api/categories', [
-            'title' => $title
+            'title' => self::NOT_UNIQUE_TITLE
         ]);
         $response->assertJsonCount(1, 'errors');
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -94,8 +94,7 @@ class CategoryTest extends TestCase
     /** @test */
     public function a_category_cannot_be_deleted_if_it_not_exists()
     {
-        $notExistedId = 1;
-        $response = $this->delete("/api/categories/{$notExistedId}");
+        $response = $this->delete('/api/categories/' . self::NOT_EXISTED_ID);
         $response->assertJsonCount(1, 'errors');
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
@@ -103,10 +102,8 @@ class CategoryTest extends TestCase
     /** @test */
     public function a_category_cannot_be_updated_if_it_not_exists()
     {
-        $notExistedId = 1;
-        $newTitle = 'New Category Title';
-        $response = $this->patch("/api/categories/{$notExistedId}", [
-            'title' => $newTitle
+        $response = $this->patch('/api/categories/' . self::NOT_EXISTED_ID, [
+            'title' => self::NEW_TITLE
         ]);
         $response->assertJsonCount(1, 'errors');
         $response->assertStatus(Response::HTTP_NOT_FOUND);
