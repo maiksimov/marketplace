@@ -15,10 +15,9 @@ class RatingSeeder extends Seeder
     public function run()
     {
         $products = Product::all();
-        $customers = Customer::all();
+        $customers = Customer::get()->pluck('id')->toArray();
 
         foreach ($products as $product) {
-            factory(Rating::class)->create(['product_id' => $product->id, 'customer_id' => $customers[array_rand($customers)]]);
             factory(Rating::class)->create(['product_id' => $product->id, 'customer_id' => $customers[array_rand($customers)]]);
         }
     }
