@@ -27,8 +27,8 @@ class CreateOrderRequest extends AbstractSiteRequest
     public function rules()
     {
         return [
-            'total_price' => 'required|string',
-            'completed' => 'required|string',
+            'total_price' => 'required|numeric',
+            'completed' => 'required|date',
             'state' => 'required|integer|in:' . implode(',', (new StateFactory())->allStates()),
             'customer_id' => 'required|integer|exists:' . (new Customer())->getTable() . ',id',
             'credit_card_id' => 'required|integer|exists:' . (new CreditCard())->getTable() . ',id',
