@@ -60,6 +60,7 @@ class Handler extends ExceptionHandler
             {
                 case AuthenticationException::class:
                     return $this->error('Unauthenticated', Response::HTTP_FORBIDDEN);
+                case NotFoundStateException::class:
                 case ModelNotFoundException::class:
                 case NotFoundHttpException::class:
                     return $this->error('Not found', Response::HTTP_NOT_FOUND);

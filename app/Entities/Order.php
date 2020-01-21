@@ -12,9 +12,7 @@ class Order extends Model
         'completed',
         'state',
         'customer_id',
-        'credit_card_id',
-        'billing_address_id',
-        'shipping_address_id',
+        'credit_card_id'
     ];
 
     public function customer()
