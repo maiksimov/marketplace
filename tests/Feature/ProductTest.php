@@ -11,6 +11,12 @@ use Tests\TestCase;
 class ProductTest extends TestCase
 {
     use RefreshDatabase;
+    const TITLE = 'New Product Title';
+    const DESCRIPTION = 'New Product Description';
+    const PRICE = 66.6;
+    const IN_STOCK = 1;
+    const EMPTY_STRING = '';
+    const NOT_EXISTED_ID = 1;
 
     protected function setUp(): void
     {
@@ -47,10 +53,10 @@ class ProductTest extends TestCase
     {
         $category = factory(Category::class)->create();
         $productData = [
-            'title' => 'New Product Title',
-            'description' => 'New Product Description',
-            'price' => 66,
-            'in_stock' => 1,
+            'title' => self::TITLE,
+            'description' => self::DESCRIPTION,
+            'price' => self::PRICE,
+            'in_stock' => self::IN_STOCK,
             'category_id' => $category->id
         ];
         $response = $this->post('/api/products', $productData);
@@ -65,10 +71,10 @@ class ProductTest extends TestCase
         $this->withExceptionHandling();
         $category = factory(Category::class)->create();
         $productData = [
-            'title' => 'New Product Title',
-            'description' => 'New Product Description',
-            'price' => 66,
-            'in_stock' => 1,
+            'title' => self::TITLE,
+            'description' => self::DESCRIPTION,
+            'price' => self::PRICE,
+            'in_stock' => self::IN_STOCK,
         ];
         $product = factory(Product::class)->create(['category_id' => $category->id]);
         $response = $this->patch("/api/products/{$product->id}", $productData);
@@ -91,10 +97,10 @@ class ProductTest extends TestCase
     {
         $category = factory(Category::class)->create();
         $productData = [
-            'title' => '',
-            'description' => 'New Product Description',
-            'price' => 66,
-            'in_stock' => 1,
+            'title' => self::EMPTY_STRING,
+            'description' => self::DESCRIPTION,
+            'price' => self::PRICE,
+            'in_stock' => self::IN_STOCK,
             'category_id' => $category->id
         ];
         $response = $this->post('/api/products', $productData);
@@ -107,10 +113,10 @@ class ProductTest extends TestCase
     {
         $category = factory(Category::class)->create();
         $productData = [
-            'title' => 'New Product Title',
-            'description' => 'New Product Description',
-            'price' => '',
-            'in_stock' => 1,
+            'title' => self::TITLE,
+            'description' => self::DESCRIPTION,
+            'price' => self::EMPTY_STRING,
+            'in_stock' => self::IN_STOCK,
             'category_id' => $category->id
         ];
         $response = $this->post('/api/products', $productData);
@@ -123,10 +129,10 @@ class ProductTest extends TestCase
     {
         $category = factory(Category::class)->create();
         $productData = [
-            'title' => 'New Product Title',
-            'description' => 'New Product Description',
-            'price' => 66,
-            'in_stock' => '',
+            'title' => self::TITLE,
+            'description' => self::DESCRIPTION,
+            'price' => self::PRICE,
+            'in_stock' => self::EMPTY_STRING,
             'category_id' => $category->id
         ];
         $response = $this->post('/api/products', $productData);
@@ -138,10 +144,10 @@ class ProductTest extends TestCase
     public function a_product_cannot_be_added_with_wrong_category_id()
     {
         $productData = [
-            'title' => 'New Product Title',
-            'description' => 'New Product Description',
-            'price' => 66,
-            'in_stock' => 1,
+            'title' => self::TITLE,
+            'description' => self::DESCRIPTION,
+            'price' => self::PRICE,
+            'in_stock' => self::IN_STOCK,
             'category_id' => 1
         ];
         $response = $this->post('/api/products', $productData);
@@ -217,8 +223,7 @@ class ProductTest extends TestCase
     /** @test */
     public function a_category_cannot_be_deleted_if_it_not_exists()
     {
-        $notExistedId = 1;
-        $response = $this->delete("/api/products/{$notExistedId}");
+        $response = $this->delete('/api/products/' .self::NOT_EXISTED_ID);
         $response->assertJsonCount(1, 'errors');
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
@@ -226,8 +231,7 @@ class ProductTest extends TestCase
     /** @test */
     public function a_category_cannot_be_updated_if_it_not_exists()
     {
-        $notExistedId = 1;
-        $response = $this->patch("/api/products/{$notExistedId}");
+        $response = $this->patch('/api/products/' . self::NOT_EXISTED_ID);
         $response->assertJsonCount(1, 'errors');
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
